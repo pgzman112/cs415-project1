@@ -25,6 +25,7 @@ def selectionSort(array):
 
 fname = 'data/smallSet/data'
 n = 20
+#adding a comment
 temp = np.loadtxt(fname + str(n) + '.txt', dtype = np.int64)
 
 temp = temp.astype(int)
