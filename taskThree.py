@@ -1,3 +1,7 @@
+#Preston Zimmerman
+#Diana Arce
+#Task Three 3/5/2021
+
 import copy
 import numpy as np
 import matplotlib.pyplot as plt

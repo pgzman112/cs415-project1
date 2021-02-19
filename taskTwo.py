@@ -1,5 +1,9 @@
+#Preston Zimmerman
+#Diana Arce
+#Task Two 3/5/2021
 import matplotlib.pyplot as plt
 import numpy as np
+
 MULTCOUNT = 0
 def inc():
     global MULTCOUNT
