@@ -3,6 +3,7 @@
 #Task One 3/5/2021
 
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as mpl
 import numpy as np
 import logging
 import threading
@@ -30,15 +31,16 @@ def fib(k):
     if k == 0:
         return 0
     if k == 1:
-        increment(fib)
         return 1
     else:
+        increment(fib)
         return fib(k-1) + fib(k-2)
 
 def gcd(m, n):
     if m == 0 or n == 0:
         return -1
     if m % n == 0:
+        increment(gcd)
         return n
     else:
         increment(gcd)
@@ -50,16 +52,19 @@ if mode == "test":
     value = int(value)
     print("The kth value of fib is: ", fib(value))
     print("num of additions made: ", FIBCOUNTER)
-    mm = fib(value+1)
-    nn = fib(value)
+    mm = fib(value)
+    nn = fib(value-1)
     print("fib of k+1: ", mm)
     print("fib of k: ", nn)
     print("The gcd of your k+1 and k: ", gcd(mm, nn))
     print("num of divs made: ", GCDCOUNTER)
 elif mode == "scatter":
-    print("Do some stuff")
+    print("Wait one moment while data is being generated")
     fibXAxis = np.array(0)
     fibYAxis = np.array(0)
+    mpl.style.use('seaborn')
+    ax = plt.gca()
+    ax.get_xaxis().get_major_formatter().set_scientific(False)
     fibPlot = plt.figure(1)
     for i in range (1,31):
         fibXAxis = np.append(fibXAxis, i)
@@ -68,8 +73,6 @@ elif mode == "scatter":
         zeroOut(fib)
     fibXAxis = np.delete(fibXAxis, 0)
     fibYAxis = np.delete(fibYAxis, 0)
-    print(fibXAxis)
-    print(fibYAxis)
     plt.xlabel('kth term')
     plt.ylabel('number of additions')
     plt.title('Fibonacci sequence')
@@ -84,17 +87,15 @@ elif mode == "scatter":
         gcdXAxis = np.append(gcdXAxis, i)
         gcdYAxis = np.append(gcdYAxis, GCDCOUNTER)
         zeroOut(gcd)
+
     gcdXAxis = np.delete(gcdXAxis, 0)
     gcdYAxis = np.delete(gcdYAxis, 0)
-    print(gcdXAxis)
-    print(gcdYAxis)
     plt.xlabel('nth term')
     plt.ylabel('number of divisions')
     plt.title('Euclid\'s algorithm')
     plt.scatter(gcdXAxis, gcdYAxis)
-    plt.show()
 
-    print("did we finish?")
+    plt.show()
 
 elif mode == "display":
     for i in range(0,13):
