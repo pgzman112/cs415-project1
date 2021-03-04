@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as mpl
 import numpy as np
 
-
 FIBCOUNTER = 0
 GCDCOUNTER = 0
 def increment(name):
@@ -48,13 +47,13 @@ mode = input("Enter 'test' for test mode and 'scatter' for scatter plot mode: ")
 if mode == "test":
     value = input("Enter kth term: ")
     value = int(value)
-    print("The kth value of fib is: ", fib(value))
+    print("The kth value of fibonacci is: ", fib(value))
     print("num of additions made: ", FIBCOUNTER)
-    mm = fib(value)
-    nn = fib(value-1)
+    mm = fib(value+1)
+    nn = fib(value)
     print("fib of k+1: ", mm)
     print("fib of k: ", nn)
-    print("The gcd of your k+1 and k: ", gcd(mm, nn))
+    print("The gcd of k+1 and your k: ", gcd(mm, nn))
     print("num of divs made: ", GCDCOUNTER)
 elif mode == "scatter":
     print("Wait one moment while data is being generated")
@@ -71,8 +70,14 @@ elif mode == "scatter":
         zeroOut(fib)
     fibXAxis = np.delete(fibXAxis, 0)
     fibYAxis = np.delete(fibYAxis, 0)
+    minYAxis = np.amin(fibYAxis)
+    maxYAxis = np.amax(fibYAxis)
+    minYAxis = minYAxis.astype('U')
+    maxYAxis = maxYAxis.astype('U')
+    yLabelName = "number of additions, in range: [" + minYAxis + ", " + maxYAxis + ']'
+    #print(yLabelName)
     plt.xlabel('kth term')
-    plt.ylabel('number of additions')
+    plt.ylabel(yLabelName)
     plt.title('Fibonacci sequence')
     plt.scatter(fibXAxis, fibYAxis)
     gcdPlot = plt.figure(2)

@@ -96,7 +96,6 @@ if __name__ == '__main__':
     elif mode == "scatter":
         if __name__ == '__main__':
             fname = 'data/testSet/data'
-
             xAxis = np.array(0)
             bestCaseInsYAxis = np.array(0)
             avgCaseInsYAxis = np.array(0)
@@ -105,7 +104,38 @@ if __name__ == '__main__':
             avgCaseSelYAxis = np.array(0)
             worstCaseSelYAxis = np.array(0)
             start = time.time()
-            for x in range(100, 6000, 200):
+
+            for x in range(200, 2000, 200):
+                print("working on data", x)
+                insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
+                insSort = np.loadtxt(fname + str(x) + '.txt', dtype=np.int64)  # random data (avg case)
+                insSortReverse = np.loadtxt(fname + str(x) + '_rSorted.txt', dtype=np.int64)  # reverse sorted (worst case)
+                insSortSorted = insSortSorted.astype(int)
+                insSort = insSort.astype(int)
+                insSortReverse = insSortReverse.astype(int)
+                selSortSorted = copy.deepcopy(insSortSorted)
+                selSort = copy.deepcopy(insSort)
+                selSortReverse = copy.deepcopy(insSortReverse)
+
+                xAxis = np.append(xAxis, x)
+
+                # This chunk generates the data for insertion sort on current file
+                insSortSortedCount = insertionSort(insSortSorted)
+                bestCaseInsYAxis = np.append(bestCaseInsYAxis, insSortSortedCount)
+                insSortCount = insertionSort(insSort)
+                avgCaseInsYAxis = np.append(avgCaseInsYAxis, insSortCount)
+                insSortReverseCount = insertionSort(insSortReverse)
+                worstCaseInsYAxis = np.append(worstCaseInsYAxis, insSortReverseCount)
+
+                # This chunk generates the data for selection sort on current file
+                selSortSortedCount = selectionSort(selSortSorted)
+                bestCaseSelYAxis = np.append(bestCaseSelYAxis, selSortSortedCount)
+                selSortCount = selectionSort(selSort)
+                avgCaseSelYAxis = np.append(avgCaseSelYAxis, selSortCount)
+                selSortReverseCount = selectionSort(selSortReverse)
+                worstCaseSelYAxis = np.append(worstCaseSelYAxis, selSortReverseCount)
+
+            for x in range(2000, 6200, 200):
                 print("working on data", x)
                 xAxis = np.append(xAxis, x)
                 insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
