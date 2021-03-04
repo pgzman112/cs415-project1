@@ -5,9 +5,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as mpl
 import numpy as np
-import logging
-import threading
-import time
+
 
 FIBCOUNTER = 0
 GCDCOUNTER = 0

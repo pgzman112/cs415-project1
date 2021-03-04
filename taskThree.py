@@ -6,9 +6,6 @@ import copy
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from multiprocessing import Process
-import logging
-import threading
 import time
 
 INSCOUNT = 0

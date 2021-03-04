@@ -108,7 +108,7 @@ if __name__ == '__main__':
             avgCaseSelYAxis = np.array(0)
             worstCaseSelYAxis = np.array(0)
             start = time.time()
-            for x in range(100, 5000, 200):
+            for x in range(100, 1000, 200):
                 print("working on data", x)
                 xAxis = np.append(xAxis, x)
                 insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
