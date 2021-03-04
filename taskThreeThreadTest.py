@@ -3,13 +3,10 @@
 #Task Three 3/5/2021
 
 import copy
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from multiprocessing import Process, Queue
-import logging
-import threading
 import time
 
 INSCOUNT = 0
@@ -108,7 +105,7 @@ if __name__ == '__main__':
             avgCaseSelYAxis = np.array(0)
             worstCaseSelYAxis = np.array(0)
             start = time.time()
-            for x in range(100, 1000, 200):
+            for x in range(100, 6000, 200):
                 print("working on data", x)
                 xAxis = np.append(xAxis, x)
                 insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
@@ -189,7 +186,7 @@ if __name__ == '__main__':
             plt.title('Average Case Insertion Sort')
             plt.scatter(xAxis, avgCaseInsYAxis, color="yellow", linewidth=1)
 
-            avgCaseInsPlot = plt.figure(3)
+            worstCaseInsPlot = plt.figure(3)
             plt.xlim(0, np.amax(xAxis) + 100)
             plt.ylim(0, np.amax(worstCaseInsYAxis) * 1.1)
             ax = plt.gca()
