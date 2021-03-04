@@ -6,6 +6,7 @@ import copy
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+from multiprocessing import Process
 import logging
 import threading
 import time
@@ -24,46 +25,61 @@ def inc(name):
 def zeroOut(name):
     if name == "ins":
         global INSCOUNT
-        INSCOUNT = 1
+        INSCOUNT = 0
     if name == 'sel':
         global SELCOUNT
         SELCOUNT = 0
 
+#def insertionSort(array):
+#    for i in range(1, len(array)):
+#        for j in range(i-1, -1, -1):
+#            inc('ins')
+#            if array[j] > array[j+1]:
+#                temp = array[j]
+#                array[j] = array[j+1]
+#                array[j+1] = temp
+#            else:
+#                break
+#    return array
+
 def insertionSort(array):
+    count = 0
     for i in range(1, len(array)):
         for j in range(i-1, -1, -1):
-            inc('ins')
+            #inc('ins')
+            count = count + 1
             if array[j] > array[j+1]:
                 temp = array[j]
                 array[j] = array[j+1]
                 array[j+1] = temp
             else:
                 break
-    return array
+    return count
 
-def selectionSort(array):
-    for i in range(0, len(array)-1):
-        smallest = i
-        for j in range(i+1, len(array)):
-            inc('sel')
-            if array[smallest] > array[j]:
-                smallest = j
-        temp = array[smallest]
-        array[smallest] = array[i]
-        array[i] = temp
-    return array
-
-#def selTwoSort(array, count):
+#def selectionSort(array):
 #    for i in range(0, len(array)-1):
 #        smallest = i
 #        for j in range(i+1, len(array)):
-#            count = count + 1
+#            inc('sel')
 #            if array[smallest] > array[j]:
 #                smallest = j
 #        temp = array[smallest]
 #        array[smallest] = array[i]
 #        array[i] = temp
-#     return count
+#    return array
+
+def selectionSort(array):
+    count = 0
+    for i in range(0, len(array)-1):
+        smallest = i
+        for j in range(i+1, len(array)):
+            count = count + 1
+            if array[smallest] > array[j]:
+                smallest = j
+        temp = array[smallest]
+        array[smallest] = array[i]
+        array[i] = temp
+    return count
 
 
 mode = input("Enter 'test' for test mode and 'scatter' for scatter plot mode: ")
@@ -82,8 +98,8 @@ if mode == "test":
         print(dSetOne[q], end=' ')
     print()
 
-    dSetOne = insertionSort(dSetOne)
-    dSetTwo = insertionSort(dSetTwo)
+    d1Count = insertionSort(dSetOne)
+    d2Count = selectionSort(dSetTwo)
 
     print("Data set sorted using Insertion sort:")
     for q in range(0, len(dSetOne)):
@@ -105,8 +121,8 @@ elif mode == "scatter":
     bestCaseSelYAxis = np.array(0)
     avgCaseSelYAxis = np.array(0)
     worstCaseSelYAxis = np.array(0)
-
-    for x in range(100, 4000, 200):
+    start = time.time()
+    for x in range(100, 1000, 200):
         print("working on data", x)
         insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
         insSort = np.loadtxt(fname + str(x) + '.txt', dtype = np.int64) #random data (avg case)
@@ -120,34 +136,36 @@ elif mode == "scatter":
         selSortReverse = copy.deepcopy(insSortReverse)
 
         #This chunk generates the data for insertion sort on current file
-        insSortSorted = insertionSort(insSortSorted)
+        insSortSortedCount = insertionSort(insSortSorted)
         xAxis = np.append(xAxis, x)
-        bestCaseInsYAxis = np.append(bestCaseInsYAxis, INSCOUNT)
-        print("x: ", x, " num comps for best: ", INSCOUNT)
-        zeroOut('ins')
-        insSort = insertionSort(insSort)
-        avgCaseInsYAxis = np.append(avgCaseInsYAxis, INSCOUNT)
-        print("x: ", x, " num comps for avg: ", INSCOUNT)
-        zeroOut('ins')
-        insSortReverse = insertionSort(insSortReverse)
-        worstCaseInsYAxis = np.append(worstCaseInsYAxis, INSCOUNT)
-        print("x: ", x, " num comps for worst: ", INSCOUNT)
-        zeroOut('ins')
+        bestCaseInsYAxis = np.append(bestCaseInsYAxis, insSortSortedCount)
+        #print("x: ", x, " num comps for best: ", INSCOUNT)
+        #zeroOut('ins')
+        insSortCount = insertionSort(insSort)
+        avgCaseInsYAxis = np.append(avgCaseInsYAxis, insSortCount)
+        #print("x: ", x, " num comps for avg: ", INSCOUNT)
+        #zeroOut('ins')
+        insSortReverseCount = insertionSort(insSortReverse)
+        worstCaseInsYAxis = np.append(worstCaseInsYAxis, insSortReverseCount)
+        #print("x: ", x, " num comps for worst: ", INSCOUNT)
+        #zeroOut('ins')
 
         #This chunk generates the data for selection sort on current file
-        selSortSorted = selectionSort(selSortSorted)
-        bestCaseSelYAxis = np.append(bestCaseSelYAxis, SELCOUNT)
-        print("x: ", x, " num comps for best: ", SELCOUNT)
-        zeroOut('sel')
-        selSort = selectionSort(selSort)
-        avgCaseSelYAxis = np.append(avgCaseSelYAxis, SELCOUNT)
-        print("x: ", x, " num comps for avg: ", SELCOUNT)
-        zeroOut('sel')
-        selSortReverse = selectionSort(selSortReverse)
-        worstCaseSelYAxis = np.append(worstCaseSelYAxis, SELCOUNT)
-        print("x: ", x, " num comps for worst: ", SELCOUNT)
-        zeroOut('sel')
+        selSortSortedCount = selectionSort(selSortSorted)
+        bestCaseSelYAxis = np.append(bestCaseSelYAxis, selSortSortedCount)
+        #print("x: ", x, " num comps for best: ", SELCOUNT)
+        #zeroOut('sel')
+        selSortCount = selectionSort(selSort)
+        avgCaseSelYAxis = np.append(avgCaseSelYAxis, selSortCount)
+        #print("x: ", x, " num comps for avg: ", SELCOUNT)
+        #zeroOut('sel')
+        selSortReverseCount = selectionSort(selSortReverse)
+        worstCaseSelYAxis = np.append(worstCaseSelYAxis, selSortReverseCount)
+        #print("x: ", x, " num comps for worst: ", SELCOUNT)
+        #zeroOut('sel')
 
+    end = time.time()
+    print("Time in seconds to generate data without threading: ", end - start)
     xAxis = np.delete(xAxis, 0)
     bestCaseInsYAxis = np.delete(bestCaseInsYAxis, 0)
     avgCaseInsYAxis = np.delete(avgCaseInsYAxis, 0)
