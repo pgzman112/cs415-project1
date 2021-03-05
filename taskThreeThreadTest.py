@@ -105,7 +105,7 @@ if __name__ == '__main__':
             worstCaseSelYAxis = np.array(0)
             start = time.time()
 
-            for x in range(200, 2000, 200):
+            for x in range(200, 1600, 200):
                 print("working on data", x)
                 insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
                 insSort = np.loadtxt(fname + str(x) + '.txt', dtype=np.int64)  # random data (avg case)
@@ -135,7 +135,7 @@ if __name__ == '__main__':
                 selSortReverseCount = selectionSort(selSortReverse)
                 worstCaseSelYAxis = np.append(worstCaseSelYAxis, selSortReverseCount)
 
-            for x in range(2000, 6200, 200):
+            for x in range(1600, 4200, 200):
                 print("working on data", x)
                 xAxis = np.append(xAxis, x)
                 insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
@@ -194,11 +194,13 @@ if __name__ == '__main__':
             print("Time in seconds to generate data using threads: ", end - start)
 
             mpl.style.use('seaborn')
+            #plt.rcParams['axes.facecolor'] = 'black'
             plt.xlim(0, np.amax(xAxis) + 100)
             plt.ylim(0, np.amax(bestCaseInsYAxis) * 1.1)
             #print(np.amax(bestCaseInsYAxis))
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
 
             bestCaseInsPlot = plt.figure(1)
             plt.xlabel('Size of n')
@@ -211,6 +213,7 @@ if __name__ == '__main__':
             plt.ylim(0, np.amax(worstCaseInsYAxis) * 1.1)
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
             plt.xlabel('Size of n')
             plt.ylabel('comparisons')
             plt.title('Average Case Insertion Sort')
@@ -221,6 +224,7 @@ if __name__ == '__main__':
             plt.ylim(0, np.amax(worstCaseInsYAxis) * 1.1)
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
             plt.xlabel('Size of n')
             plt.ylabel('comparisons')
             plt.title('worst Case Insertion Sort')
@@ -231,6 +235,7 @@ if __name__ == '__main__':
             plt.ylim(0, np.amax(bestCaseSelYAxis) * 1.1)
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
             plt.xlabel('Size of n')
             plt.ylabel('comparisons')
             plt.title('Best Case Selection Sort')
@@ -241,6 +246,7 @@ if __name__ == '__main__':
             plt.ylim(0, np.amax(avgCaseSelYAxis) * 1.1)
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
             plt.xlabel('Size of n')
             plt.ylabel('comparisons')
             plt.title('Average Case Selection Sort')
@@ -251,6 +257,7 @@ if __name__ == '__main__':
             plt.ylim(0, np.amax(worstCaseSelYAxis) * 1.1)
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
             plt.xlabel('Size of n')
             plt.ylabel('comparisons')
             plt.title('Worst Case Selection Sort')
@@ -261,6 +268,7 @@ if __name__ == '__main__':
             plt.ylim(0, np.amax(worstCaseInsYAxis) * 1.1)
             ax = plt.gca()
             ax.get_xaxis().get_major_formatter().set_scientific(False)
+            ax.get_yaxis().get_major_formatter().set_scientific(False)
             plt.xlabel('Size of n')
             plt.ylabel('comparisons')
             plt.title('All three Insertion sort cases')

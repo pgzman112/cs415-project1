@@ -81,6 +81,7 @@ elif mode == "scatter":
         decByConsMults = np.append(decByConsMults, MULTCOUNT)
         zeroOut()
         divAndConq(a, i)
+        #print("pushing: ", i, " to x axis and ", MULTCOUNT, " to y axis")
         divAndConqMults = np.append(divAndConqMults, MULTCOUNT)
         zeroOut()
 
@@ -90,7 +91,7 @@ elif mode == "scatter":
     divAndConqMults = np.delete(divAndConqMults, 0)
 
     mpl.style.use('seaborn')
-    plt.xlim(0, 105)
+    plt.xlim(0, np.amax(xAxis + 10))
     plt.ylim(0, np.amax(divAndConqMults) + 25)
     ax = plt.gca()
     ax.get_xaxis().get_major_formatter().set_scientific(False)

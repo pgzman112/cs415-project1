@@ -62,6 +62,7 @@ elif mode == "scatter":
     mpl.style.use('seaborn')
     ax = plt.gca()
     ax.get_xaxis().get_major_formatter().set_scientific(False)
+    ax.get_yaxis().get_major_formatter().set_scientific(False)
     fibPlot = plt.figure(1)
     for i in range (1,31):
         fibXAxis = np.append(fibXAxis, i)
@@ -76,32 +77,35 @@ elif mode == "scatter":
     maxYAxis = maxYAxis.astype('U')
     yLabelName = "number of additions, in range: [" + minYAxis + ", " + maxYAxis + ']'
     #print(yLabelName)
-    plt.xlabel('kth term')
+    plt.xlabel('kth term in fibonacci sequence')
     plt.ylabel(yLabelName)
     plt.title('Fibonacci sequence')
     plt.scatter(fibXAxis, fibYAxis)
     gcdPlot = plt.figure(2)
     gcdXAxis = np.array(0)
     gcdYAxis = np.array(0)
-    for i in range(2,32):
-        m = fib(i+1)
-        n = fib(i)
-        gcd(m,n)
-        gcdXAxis = np.append(gcdXAxis, i)
-        gcdYAxis = np.append(gcdYAxis, GCDCOUNTER)
-        zeroOut(gcd)
+    f0 = 0
+    f1 = 1
+    for i in range(2,15):
+       #m = fib(i+1)
+       #n = fib(i)
+       temp = f0 + f1
+       gcd(temp, f1)
+       print('pushing: ', f1, 'to the x axis', ' and pushing: ', GCDCOUNTER, 'the the y axis')
+       gcdXAxis = np.append(gcdXAxis, f1)
+       gcdYAxis = np.append(gcdYAxis, GCDCOUNTER)
+       zeroOut(gcd)
+       f0 = f1
+       f1 = temp
 
     gcdXAxis = np.delete(gcdXAxis, 0)
     gcdYAxis = np.delete(gcdYAxis, 0)
-    plt.xlabel('nth term')
+    plt.xlabel('fibonacci value')
     plt.ylabel('number of divisions')
     plt.title('Euclid\'s algorithm')
     plt.scatter(gcdXAxis, gcdYAxis)
 
     plt.show()
 
-elif mode == "display":
-    for i in range(0,13):
-        print(fib(i))
 else:
     print("incorrect input please run the program and try again")
