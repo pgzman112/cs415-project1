@@ -91,7 +91,7 @@ elif mode == "scatter":
        #n = fib(i)
        temp = f0 + f1
        gcd(temp, f1)
-       print('pushing: ', f1, 'to the x axis', ' and pushing: ', GCDCOUNTER, 'the the y axis')
+       #print('pushing: ', f1, 'to the x axis', ' and pushing: ', GCDCOUNTER, 'the the y axis')
        gcdXAxis = np.append(gcdXAxis, f1)
        gcdYAxis = np.append(gcdYAxis, GCDCOUNTER)
        zeroOut(gcd)

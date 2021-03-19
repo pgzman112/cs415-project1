@@ -119,7 +119,7 @@ elif mode == "scatter":
     avgCaseSelYAxis = np.array(0)
     worstCaseSelYAxis = np.array(0)
     start = time.time()
-    for x in range(200, 6200, 200):
+    for x in range(200, 4200, 200):
         print("working on data", x)
         insSortSorted = np.loadtxt(fname + str(x) + '_sorted.txt', dtype=np.int64)  # sorted (best case)
         insSort = np.loadtxt(fname + str(x) + '.txt', dtype = np.int64) #random data (avg case)
